@@ -1,8 +1,8 @@
 <!-- =========================
-     contact.html
+     contact.html  — made SAME as cert.html (data-theme toggle + tokens + iconBtn)
 ========================= -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,70 +22,177 @@
     referrerpolicy="no-referrer"
   />
 
+  <!-- ✅ set theme before paint (same as cert.html) -->
+  <script>
+    (function () {
+      try {
+        const key = "ananya-theme";
+        const saved = localStorage.getItem(key);
+        const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+        const theme = (saved === "light" || saved === "dark") ? saved : (prefersLight ? "light" : "dark");
+        document.documentElement.dataset.theme = theme;
+      } catch (e) {}
+    })();
+  </script>
+
   <style>
     :root{
-      --bg:#0b1220; --border:rgba(255,255,255,.10);
-      --text:rgba(255,255,255,.88); --muted:rgba(255,255,255,.62);
-      --accent:#7aa2f7; --accent2:#a78bfa;
+      --bg:#0b1220;
+      --bg2:#070b13;
+      --panel:rgba(255,255,255,.03);
+      --border:rgba(255,255,255,.10);
+
+      --text:rgba(255,255,255,.88);
+      --muted:rgba(255,255,255,.62);
+
+      --accent:#7aa2f7;
+      --accent2:#a78bfa;
+
       --shadow:0 12px 35px rgba(0,0,0,.35);
-      --radius:16px; --max:1100px;
+      --radius:16px;
+      --max:1100px;
+
+      --glass:rgba(11,18,32,.65);
+      --ring:0 0 0 4px rgba(122,162,247,.12);
+
+      /* form */
+      --field-bg: rgba(255,255,255,.04);
+      --field-border: rgba(255,255,255,.12);
+      --field-focus: rgba(122,162,247,.55);
+      --field-focus-ring: rgba(122,162,247,.10);
     }
+
+    html[data-theme="light"]{
+      --bg:#f6f8ff;
+      --bg2:#eef2ff;
+      --panel: rgba(255,255,255,.78);
+      --border: rgba(8,15,30,.12);
+
+      --text: rgba(8,15,30,.90);
+      --muted: rgba(8,15,30,.62);
+
+      --shadow: 0 12px 35px rgba(10,15,30,.12);
+      --glass: rgba(255,255,255,.70);
+      --ring: 0 0 0 4px rgba(122,162,247,.18);
+
+      --field-bg: rgba(255,255,255,.85);
+      --field-border: rgba(8,15,30,.14);
+      --field-focus: rgba(37,99,235,.55);
+      --field-focus-ring: rgba(37,99,235,.12);
+    }
+
     *{box-sizing:border-box}
+    html,body{height:100%; overflow-x:hidden;}
     body{
-      margin:0;font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);
+      margin:0;
+      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
       background:
         radial-gradient(900px 450px at 10% 10%, rgba(122,162,247,.20), transparent 60%),
         radial-gradient(700px 450px at 90% 20%, rgba(167,139,250,.18), transparent 55%),
-        linear-gradient(180deg, var(--bg), #070b13);
+        linear-gradient(180deg, var(--bg), var(--bg2));
     }
     a{color:inherit;text-decoration:none}
     .outer{min-height:100vh;display:flex;flex-direction:column}
+    :focus-visible{outline:none; box-shadow:var(--ring); border-radius:12px;}
 
     header{
       position:sticky;top:0;z-index:30;
       backdrop-filter:blur(10px);
-      background:rgba(11,18,32,.65);
+      background:var(--glass);
       border-bottom:1px solid var(--border);
     }
     nav{
-      max-width:var(--max);margin:0 auto;padding:14px 18px;
-      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
     }
-    .brand{display:flex;align-items:center;gap:10px;font-weight:700}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700;white-space:nowrap}
     .dot{
       width:10px;height:10px;border-radius:999px;
       background:linear-gradient(135deg,var(--accent),var(--accent2));
       box-shadow:0 0 0 4px rgba(122,162,247,.12);
     }
+
+    .rightNav{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
     .navlinks{display:flex;gap:8px;list-style:none;margin:0;padding:0;flex-wrap:wrap}
     .navlinks a{
-      color:var(--muted);font-weight:500;padding:8px 10px;border-radius:10px;
-      transition:.2s ease;display:inline-flex;align-items:center;gap:8px;
+      color:var(--muted);
+      font-weight:500;
+      padding:8px 10px;
+      border-radius:10px;
+      transition:.2s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid transparent;
     }
-    .navlinks a:hover{color:var(--text);background:rgba(255,255,255,.05)}
-    .navlinks a.active{color:var(--text);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10)}
+    .navlinks a:hover{color:var(--text);background:rgba(255,255,255,.06)}
+    html[data-theme="light"] .navlinks a:hover{background:rgba(8,15,30,.06)}
+    .navlinks a.active{color:var(--text);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}
+    html[data-theme="light"] .navlinks a.active{background:rgba(8,15,30,.06);border:1px solid rgba(8,15,30,.12)}
+
+    /* ✅ SAME theme button as cert.html */
+    .iconBtn{
+      width:42px;height:42px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      display:grid;place-items:center;
+      color:var(--text);
+      cursor:pointer;
+      transition:.2s ease;
+      flex:0 0 auto;
+    }
+    html[data-theme="light"] .iconBtn{
+      color:rgba(8,15,30,.90);
+      background:rgba(255,255,255,.70);
+    }
+    .iconBtn:hover{transform:translateY(-1px);background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18)}
+    html[data-theme="light"] .iconBtn:hover{background:rgba(255,255,255,.92);border-color:rgba(8,15,30,.16)}
+    .iconBtn:active{transform:translateY(0px)}
 
     main{flex:1;max-width:var(--max);width:100%;margin:0 auto;padding:28px 18px 0}
 
     .topCard{
       border:1px solid var(--border);
-      background:rgba(255,255,255,.03);
+      background:var(--panel);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
       padding:18px;
-      margin-bottom: 16px;
+      margin-bottom:16px;
+      position:relative;
+      overflow:hidden;
     }
-    .headline{margin:0 0 6px;font-size:22px}
+    .topCard::before{
+      content:"";
+      position:absolute; inset:-120px -80px auto auto;
+      width:320px; height:320px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(122,162,247,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(167,139,250,.20), transparent 55%);
+      transform: rotate(18deg);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .headline{margin:0 0 6px;font-size:22px;letter-spacing:.2px}
     .subline{margin:0;color:var(--muted);font-size:13px;line-height:1.7}
 
     .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 
     .panel{
       border:1px solid var(--border);
-      background:rgba(255,255,255,.03);
+      background:var(--panel);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
       padding:18px;
+      max-width:100%;
+      min-width:0;
     }
 
     .card{
@@ -93,28 +200,46 @@
       background:rgba(255,255,255,.03);
       border-radius:14px;
       padding:14px;
+      max-width:100%;
+      min-width:0;
+      transition:.2s ease;
+    }
+    html[data-theme="light"] .card{background:rgba(255,255,255,.70)}
+    .card:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.05);
+      border-color: rgba(255,255,255,.16);
+    }
+    html[data-theme="light"] .card:hover{
+      background: rgba(255,255,255,.90);
+      border-color: rgba(8,15,30,.14);
     }
 
-    .label{font-size:12px;color:rgba(255,255,255,.55);margin:0 0 6px}
+    .label{font-size:12px;color:var(--muted);margin:0 0 6px}
     .value{font-weight:600;margin:0}
-    .value a{color:rgba(255,255,255,.90)}
+    .value a{
+      color:var(--text);
+      overflow-wrap:anywhere;
+      word-break:break-word;
+    }
     .value a:hover{text-decoration:underline}
 
     .form{display:grid;gap:10px;margin-top:10px}
     input, textarea{
       width:100%;
       border-radius:12px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
+      border:1px solid var(--field-border);
+      background: var(--field-bg);
       color: var(--text);
       padding: 12px 12px;
       font-family: inherit;
       outline: none;
+      min-width:0;
     }
     textarea{min-height: 120px; resize: vertical}
     input:focus, textarea:focus{
-      border-color: rgba(122,162,247,.55);
-      box-shadow: 0 0 0 4px rgba(122,162,247,.10);
+      border-color: var(--field-focus);
+      box-shadow: 0 0 0 4px var(--field-focus-ring);
     }
 
     .btnRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
@@ -129,11 +254,13 @@
       cursor:pointer;
       user-select:none;
     }
+    html[data-theme="light"] .btn{background:rgba(8,15,30,.06)}
     .btn:hover{
       transform:translateY(-1px);
       background:rgba(255,255,255,.06);
       border-color:rgba(255,255,255,.16)
     }
+    html[data-theme="light"] .btn:hover{background:rgba(8,15,30,.10);border-color:rgba(8,15,30,.14)}
     .btn.primary{
       border:none;
       background:linear-gradient(135deg,var(--accent),var(--accent2));
@@ -143,32 +270,45 @@
     .hintNote{
       margin-top:10px;
       font-size:12px;
-      color: rgba(255,255,255,.50);
+      color: var(--muted);
       line-height: 1.6;
     }
 
     footer{
-      margin-top:30px;border-top:1px solid var(--border);
-      background:rgba(11,18,32,.65);backdrop-filter:blur(10px)
+      margin-top:30px;
+      border-top:1px solid var(--border);
+      background:var(--glass);
+      backdrop-filter:blur(10px);
     }
     .footerInner{
-      max-width:var(--max);margin:0 auto;padding:18px;
-      display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center
+      max-width:var(--max);
+      margin:0 auto;
+      padding:18px;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:16px;
+      align-items:center;
     }
-    .footNav{display:flex;gap:14px;list-style:none;padding:0;margin:0;flex-wrap:wrap;justify-content:flex-end}
+    .footNav{
+      display:flex;gap:14px;
+      list-style:none;padding:0;margin:0;
+      flex-wrap:wrap;justify-content:flex-end
+    }
     .footNav a{color:var(--muted);padding:8px 10px;border-radius:10px;transition:.2s ease}
     .footNav a:hover{color:var(--text);background:rgba(255,255,255,.05)}
-    .copyright{
-  max-width:var(--max);
-  margin:0 auto;
-  padding:0 18px 18px;
-  color:rgba(255,255,255,.45);
-  font-size:12px;
-  text-align:center;   /* ✅ CENTER TEXT */
-}
+    html[data-theme="light"] .footNav a:hover{background:rgba(8,15,30,.06)}
 
+    .copyright{
+      text-align:center;
+      padding:15px 0;
+      font-size:14px;
+      color:var(--muted);
+      border-top:1px solid rgba(128,128,128,0.2);
+    }
 
     @media (max-width:900px){
+      nav{ padding:10px 14px; }
+      main{ padding:18px 14px 0; }
       .grid2{grid-template-columns:1fr}
       .footerInner{grid-template-columns:1fr}
       .footNav{justify-content:flex-start}
@@ -181,14 +321,24 @@
 
     <header>
       <nav>
-        <div class="brand"><span class="dot"></span><span>Ananya’s Portfolio</span></div>
-        <ul class="navlinks">
-          <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
-          <li><a href="experience.html"><i class="fa-solid fa-briefcase"></i> Experience</a></li>
-          <li><a href="cert.html"><i class="fa-solid fa-certificate"></i> Certifications</a></li>
-<li><a href="projects.html"><i class="fa-solid fa-diagram-project"></i> Projects</a></li>         
-          <li><a class="active" href="contact.html"><i class="fa-solid fa-paper-plane"></i> Contact</a></li>
-        </ul>
+        <a class="brand" href="index.html" aria-label="Go to home">
+          <span class="dot"></span><span>Ananya’s Portfolio</span>
+        </a>
+
+        <div class="rightNav">
+          <ul class="navlinks">
+            <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="experience.html"><i class="fa-solid fa-briefcase"></i> Experience</a></li>
+            <li><a href="cert.html"><i class="fa-solid fa-certificate"></i> Certifications</a></li>
+            <li><a href="projects.html"><i class="fa-solid fa-diagram-project"></i> Projects</a></li>
+            <li><a class="active" href="contact.html"><i class="fa-solid fa-paper-plane"></i> Contact</a></li>
+          </ul>
+
+          <!-- ✅ added theme toggle (same as cert.html) -->
+          <button class="iconBtn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme" type="button">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+        </div>
       </nav>
     </header>
 
@@ -203,21 +353,23 @@
         <div class="panel">
           <div class="card">
             <p class="label">Email</p>
-            <!-- ✅ Put YOUR email here -->
-            <p class="value">ananyajoshi0707@gmail.com</a></p>
+            <p class="value">ananyajoshi0707@gmail.com</p>
 
             <p class="label" style="margin-top:12px">LinkedIn</p>
             <p class="value"><a href="https://www.linkedin.com/in/ananya-joshi0707/" target="_blank" rel="noopener">linkedin.com/in/ananya-joshi0707</a></p>
+
             <p class="label" style="margin-top:12px">GitHub</p>
             <p class="value"><a href="https://github.com/ananyajoshi0707" target="_blank" rel="noopener">https://github.com/ananyajoshi0707</a></p>
-             <p class="label" style="margin-top:12px">Twitter</p>
+
+            <p class="label" style="margin-top:12px">Twitter</p>
             <p class="value"><a href="https://x.com/ananya_6427" target="_blank" rel="noopener">https://x.com/ananya_6427</a></p>
+
             <p class="label" style="margin-top:12px">Location</p>
             <p class="value">India</p>
           </div>
         </div>
 
-        <!-- RIGHT: Email form (Gmail-style compose OR mailto) -->
+        <!-- RIGHT: Email form -->
         <div class="panel">
           <div class="card">
             <p class="label">Quick Message</p>
@@ -232,8 +384,6 @@
                 <button class="btn primary" type="submit">
                   <i class="fa-solid fa-paper-plane"></i> Send Email
                 </button>
-
-                
               </div>
 
               <div class="hintNote">
@@ -248,7 +398,7 @@
     <footer>
       <div class="footerInner">
         <div style="font-weight:700">Ananya — Developer Portfolio</div>
-    
+        <ul class="footNav"></ul>
       </div>
 
       <div class="copyright">
@@ -262,8 +412,45 @@
     // ✅ Change this to YOUR email
     const YOUR_EMAIL = "ananyajoshi0707@gmail.com";
 
-    // If user uses Gmail, this opens Gmail compose like Ayushman’s portfolio.
-    // Otherwise fallback to mailto.
+    // ✅ Theme toggle JS (EXACT like cert.html)
+    (() => {
+      "use strict";
+
+      const themeKey = "ananya-theme";
+      const btn = document.getElementById("themeToggle");
+
+      const getPreferredTheme = () => {
+        const saved = localStorage.getItem(themeKey);
+        if (saved === "light" || saved === "dark") return saved;
+        return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      };
+
+      const applyTheme = (theme) => {
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem(themeKey, theme);
+        if (btn) {
+          btn.innerHTML = theme === "light"
+            ? '<i class="fa-solid fa-moon"></i>'
+            : '<i class="fa-solid fa-sun"></i>';
+          btn.title = `Switch to ${theme === "light" ? "dark" : "light"} mode`;
+          btn.setAttribute("aria-label", btn.title);
+        }
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        applyTheme(getPreferredTheme());
+
+        if (btn) {
+          btn.addEventListener("click", () => {
+            const cur = document.documentElement.getAttribute("data-theme") || "dark";
+            const next = cur === "light" ? "dark" : "light";
+            applyTheme(next);
+          });
+        }
+      });
+    })();
+
+    // ✅ Gmail compose (fallback to mailto)
     document.getElementById("contactForm").addEventListener("submit", function (e) {
       e.preventDefault();
 
@@ -274,29 +461,23 @@
 
       const body =
         `Hi Ananya,%0D%0A%0D%0A` +
-        `${message}%0D%0A%0D%0A` +
-        `From:%20${name}%0D%0A` +
-        `Email:%20${email}%0D%0A`;
+        `${encodeURIComponent(message)}%0D%0A%0D%0A` +
+        `From:%20${encodeURIComponent(name)}%0D%0A` +
+        `Email:%20${encodeURIComponent(email)}%0D%0A`;
 
-      // Gmail compose URL (works if user is logged into Gmail)
       const gmailUrl =
         `https://mail.google.com/mail/?view=cm&fs=1` +
         `&to=${encodeURIComponent(YOUR_EMAIL)}` +
         `&su=${encodeURIComponent(subject)}` +
         `&body=${body}`;
 
-      // Mailto fallback
       const mailtoUrl =
         `mailto:${encodeURIComponent(YOUR_EMAIL)}` +
         `?subject=${encodeURIComponent(subject)}` +
         `&body=${body}`;
 
-      // Try Gmail first, then fallback
-      // (Most browsers allow opening Gmail in new tab)
       const opened = window.open(gmailUrl, "_blank");
-      if (!opened) {
-        window.location.href = mailtoUrl;
-      }
+      if (!opened) window.location.href = mailtoUrl;
     });
   </script>
 </body>

@@ -1,5 +1,6 @@
 <!-- =========================
-     contact.html  — made SAME as cert.html (data-theme toggle + tokens + iconBtn)
+     contact.html  — SAME as cert.html
+     (data-theme toggle + tokens + iconBtn + MOBILE MENU + Skills anchor to index.html#skills)
 ========================= -->
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
@@ -55,6 +56,8 @@
       --glass:rgba(11,18,32,.65);
       --ring:0 0 0 4px rgba(122,162,247,.12);
 
+      --navH: 64px;
+
       /* form */
       --field-bg: rgba(255,255,255,.04);
       --field-border: rgba(255,255,255,.12);
@@ -82,7 +85,7 @@
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%; overflow-x:hidden;}
+    html,body{height:100%; scroll-behavior:smooth; overflow-x:hidden;}
     body{
       margin:0;
       font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
@@ -105,7 +108,8 @@
     nav{
       max-width:var(--max);
       margin:0 auto;
-      padding:14px 18px;
+      padding:12px 18px;
+      min-height: var(--navH);
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -156,6 +160,37 @@
     .iconBtn:hover{transform:translateY(-1px);background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18)}
     html[data-theme="light"] .iconBtn:hover{background:rgba(255,255,255,.92);border-color:rgba(8,15,30,.16)}
     .iconBtn:active{transform:translateY(0px)}
+
+    /* ✅ Mobile menu */
+    .burger{display:none}
+    .mobileMenu{
+      border-top:1px solid var(--border);
+      background: rgba(255,255,255,.02);
+    }
+    html[data-theme="light"] .mobileMenu{ background: rgba(255,255,255,.55); }
+    .mobileMenuInner{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:10px 18px 14px;
+      display:grid;
+      gap:10px;
+    }
+    .mobileLinks{
+      display:grid; gap:8px;
+      list-style:none; margin:0; padding:0;
+    }
+    .mobileLinks a{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      display:flex; align-items:center; gap:10px;
+    }
+    html[data-theme="light"] .mobileLinks a{ background: rgba(255,255,255,.80); }
+    .mobileLinks a:hover{ background: rgba(255,255,255,.06); }
+    html[data-theme="light"] .mobileLinks a:hover{ background: rgba(255,255,255,.95); }
+    .mobileMenu[hidden]{ display:none !important; }
 
     main{flex:1;max-width:var(--max);width:100%;margin:0 auto;padding:28px 18px 0}
 
@@ -312,6 +347,9 @@
       .grid2{grid-template-columns:1fr}
       .footerInner{grid-template-columns:1fr}
       .footNav{justify-content:flex-start}
+
+      .navlinks{ display:none; }
+      .burger{ display:grid; }
     }
   </style>
 </head>
@@ -326,20 +364,46 @@
         </a>
 
         <div class="rightNav">
-          <ul class="navlinks">
+          <ul class="navlinks" aria-label="Primary navigation">
             <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
             <li><a href="experience.html"><i class="fa-solid fa-briefcase"></i> Experience</a></li>
             <li><a href="cert.html"><i class="fa-solid fa-certificate"></i> Certifications</a></li>
             <li><a href="projects.html"><i class="fa-solid fa-diagram-project"></i> Projects</a></li>
+
+            <!-- ✅ Skills anchor to index.html#skills -->
+            <li><a href="index.html#skills"><i class="fa-solid fa-bolt"></i> Skills</a></li>
+
             <li><a class="active" href="contact.html"><i class="fa-solid fa-paper-plane"></i> Contact</a></li>
           </ul>
 
-          <!-- ✅ added theme toggle (same as cert.html) -->
+          <!-- ✅ theme toggle -->
           <button class="iconBtn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme" type="button">
             <i class="fa-solid fa-moon"></i>
           </button>
+
+          <!-- ✅ mobile menu toggle -->
+          <button class="iconBtn burger" id="menuToggle" aria-label="Open menu" aria-expanded="false" title="Menu" type="button">
+            <i class="fa-solid fa-bars"></i>
+          </button>
         </div>
       </nav>
+
+      <!-- ✅ Mobile menu (collapsible) -->
+      <div class="mobileMenu" id="mobileMenu" hidden>
+        <div class="mobileMenuInner">
+          <ul class="mobileLinks" aria-label="Mobile navigation">
+            <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="experience.html"><i class="fa-solid fa-briefcase"></i> Experience</a></li>
+            <li><a href="cert.html"><i class="fa-solid fa-certificate"></i> Certifications</a></li>
+            <li><a href="projects.html"><i class="fa-solid fa-diagram-project"></i> Projects</a></li>
+
+            <!-- ✅ Skills anchor to index.html#skills -->
+            <li><a href="index.html#skills"><i class="fa-solid fa-bolt"></i> Skills</a></li>
+
+            <li><a class="active" href="contact.html"><i class="fa-solid fa-paper-plane"></i> Contact</a></li>
+          </ul>
+        </div>
+      </div>
     </header>
 
     <main>
@@ -412,42 +476,78 @@
     // ✅ Change this to YOUR email
     const YOUR_EMAIL = "ananyajoshi0707@gmail.com";
 
-    // ✅ Theme toggle JS (EXACT like cert.html)
-    (() => {
+    // ✅ Theme + Mobile Menu JS (same system as your other pages)
+    (function () {
       "use strict";
 
       const themeKey = "ananya-theme";
-      const btn = document.getElementById("themeToggle");
+      const root = document.documentElement;
 
-      const getPreferredTheme = () => {
-        const saved = localStorage.getItem(themeKey);
-        if (saved === "light" || saved === "dark") return saved;
-        return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-      };
+      const themeBtn = document.getElementById("themeToggle");
+      const menuBtn = document.getElementById("menuToggle");
+      const mobileMenu = document.getElementById("mobileMenu");
 
-      const applyTheme = (theme) => {
-        document.documentElement.setAttribute("data-theme", theme);
+      function setTheme(theme) {
+        root.dataset.theme = theme;
         localStorage.setItem(themeKey, theme);
-        if (btn) {
-          btn.innerHTML = theme === "light"
+
+        if (themeBtn) {
+          themeBtn.innerHTML = theme === "light"
             ? '<i class="fa-solid fa-moon"></i>'
             : '<i class="fa-solid fa-sun"></i>';
-          btn.title = `Switch to ${theme === "light" ? "dark" : "light"} mode`;
-          btn.setAttribute("aria-label", btn.title);
+
+          themeBtn.title = `Switch to ${theme === "light" ? "dark" : "light"} mode`;
+          themeBtn.setAttribute("aria-label", themeBtn.title);
         }
-      };
+      }
 
-      document.addEventListener("DOMContentLoaded", () => {
-        applyTheme(getPreferredTheme());
+      function getInitialTheme() {
+        const saved = localStorage.getItem(themeKey);
+        if (saved === "light" || saved === "dark") return saved;
 
-        if (btn) {
-          btn.addEventListener("click", () => {
-            const cur = document.documentElement.getAttribute("data-theme") || "dark";
-            const next = cur === "light" ? "dark" : "light";
-            applyTheme(next);
+        const prefersLight = window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: light)").matches;
+
+        return prefersLight ? "light" : "dark";
+      }
+
+      // Init theme
+      setTheme(root.dataset.theme || getInitialTheme());
+
+      // Theme toggle
+      if (themeBtn) {
+        themeBtn.addEventListener("click", () => {
+          const current = root.dataset.theme || "dark";
+          setTheme(current === "light" ? "dark" : "light");
+        });
+      }
+
+      // Mobile menu toggle
+      if (menuBtn && mobileMenu) {
+        const setOpen = (open) => {
+          menuBtn.setAttribute("aria-expanded", String(open));
+          menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+          menuBtn.innerHTML = open
+            ? '<i class="fa-solid fa-xmark"></i>'
+            : '<i class="fa-solid fa-bars"></i>';
+          mobileMenu.hidden = !open;
+        };
+
+        let open = false;
+        setOpen(open);
+
+        menuBtn.addEventListener("click", () => {
+          open = !open;
+          setOpen(open);
+        });
+
+        mobileMenu.querySelectorAll("a").forEach(a => {
+          a.addEventListener("click", () => {
+            open = false;
+            setOpen(open);
           });
-        }
-      });
+        });
+      }
     })();
 
     // ✅ Gmail compose (fallback to mailto)
@@ -482,3 +582,4 @@
   </script>
 </body>
 </html>
+

@@ -1,5 +1,5 @@
 <!-- =========================
-     index.html (Home) — made SAME as cert.html theme system + added "View more projects" link
+     index.html (Home) — UPDATED (Skills has id="skills" + removed Profile Views Counter)
 ========================= -->
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
@@ -25,7 +25,7 @@
   <!-- Typed.js -->
   <script defer src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
 
-  <!-- ✅ set theme before paint (same as cert.html) -->
+  <!-- ✅ set theme before paint -->
   <script>
     (function () {
       try {
@@ -41,9 +41,8 @@
   <!-- Your existing CSS file -->
   <link rel="stylesheet" href="/CSS/style.css">
 
-  <!-- ✅ small additions only (keeps your current design) -->
+  <!-- ✅ small additions only -->
   <style>
-    /* Make sure your CSS uses these tokens (cert-style) */
     :root{
       --bg:#0b1220;
       --bg2:#070b13;
@@ -56,6 +55,7 @@
       --shadow:0 12px 35px rgba(0,0,0,.35);
       --glass:rgba(11,18,32,.65);
       --ring:0 0 0 4px rgba(122,162,247,.12);
+      --navH: 64px;
     }
     html[data-theme="light"]{
       --bg:#f6f8ff;
@@ -69,7 +69,7 @@
       --ring: 0 0 0 4px rgba(122,162,247,.18);
     }
 
-    /* If your style.css already defines these, this just ensures theme works */
+    html,body{scroll-behavior:smooth; overflow-x:hidden;}
     body{
       color: var(--text);
       background:
@@ -79,7 +79,10 @@
     }
     :focus-visible{outline:none; box-shadow:var(--ring); border-radius:12px;}
 
-    /* ✅ iconBtn same as cert.html (in case style.css differs) */
+    /* ✅ ensures mobile menu never stays visible */
+    .mobileMenu[hidden]{ display:none !important; }
+
+    /* ✅ iconBtn (cert-style) */
     .iconBtn{
       width:42px;height:42px;
       border-radius:14px;
@@ -99,41 +102,13 @@
     html[data-theme="light"] .iconBtn:hover{background:rgba(255,255,255,.92);border-color:rgba(8,15,30,.16)}
     .iconBtn:active{transform:translateY(0px)}
 
-    /* ✅ "View more projects" link button under What I build */
-    .moreProjectsRow{
-      display:flex;
-      justify-content:flex-end;
-      margin-top:12px;
+    /* ✅ prevent anchor from hiding under sticky header */
+    .anchorOffset{
+      scroll-margin-top: calc(var(--navH) + 18px);
     }
-    .moreProjectsLink{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.04);
-      color:var(--text);
-      font-weight:600;
-      transition:.2s ease;
-      user-select:none;
-      white-space:nowrap;
-    }
-    html[data-theme="light"] .moreProjectsLink{background:rgba(8,15,30,.06)}
-    .moreProjectsLink:hover{
-      transform:translateY(-1px);
-      background:rgba(255,255,255,.06);
-      border-color:rgba(255,255,255,.16);
-    }
-    html[data-theme="light"] .moreProjectsLink:hover{background:rgba(8,15,30,.10);border-color:rgba(8,15,30,.14)}
 
-    /* ✅ profile views style (optional, but makes it readable in both themes) */
-    .profile-views{
-      text-align:center;
-      padding:0 0 16px;
-      color:var(--muted);
-      font-size:13px;
-    }
+    /* OPTIONAL: make "Skills" nav item look like other links if style.css doesn't cover it */
+    .navlinks a, .mobileLinks a { text-decoration:none; }
   </style>
 </head>
 
@@ -153,10 +128,14 @@
             <li><a href="experience.html"><i class="fa-solid fa-briefcase"></i> Experience</a></li>
             <li><a href="cert.html"><i class="fa-solid fa-certificate"></i> Certifications</a></li>
             <li><a href="projects.html"><i class="fa-solid fa-diagram-project"></i> Projects</a></li>
+
+            <!-- Skills anchor (same page) -->
+            <li><a href="#skills" class="jsScroll"><i class="fa-solid fa-bolt"></i> Skills</a></li>
+
             <li><a href="contact.html"><i class="fa-solid fa-paper-plane"></i> Contact</a></li>
           </ul>
 
-          <!-- Theme toggle (cert-style icon) -->
+          <!-- Theme toggle -->
           <button class="iconBtn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme" type="button">
             <i class="fa-solid fa-moon"></i>
           </button>
@@ -176,6 +155,10 @@
             <li><a href="experience.html"><i class="fa-solid fa-briefcase"></i> Experience</a></li>
             <li><a href="cert.html"><i class="fa-solid fa-certificate"></i> Certifications</a></li>
             <li><a href="projects.html"><i class="fa-solid fa-diagram-project"></i> Projects</a></li>
+
+            <!-- Skills anchor (same page) -->
+            <li><a href="#skills" class="jsScroll"><i class="fa-solid fa-bolt"></i> Skills</a></li>
+
             <li><a href="contact.html"><i class="fa-solid fa-paper-plane"></i> Contact</a></li>
           </ul>
 
@@ -237,68 +220,65 @@
         </div>
       </section>
 
-
-      <!-- SKILLS -->
-    
-
-<section class="reveal">
-  <div class="sectionHead">
-    <h2>Skills</h2>
-    <div class="hint">My core stack</div>
-  </div>
-
-  <div class="panel">
-    <div class="skillsGrid">
-      <article class="skillCard">
-        <div class="skillTop">
-          <div class="skillIcon"><i class="fa-solid fa-code"></i></div>
-          <h3>Programming & Backend</h3>
+      <!-- ✅ SKILLS (anchor target) -->
+      <section class="reveal anchorOffset" id="skills">
+        <div class="sectionHead">
+          <h2>Skills</h2>
+          <div class="hint">My core stack</div>
         </div>
-        <p>Python, Django, Flask, FastAPI, REST APIs, Microservices</p>
-      </article>
 
-      <article class="skillCard">
-        <div class="skillTop">
-          <div class="skillIcon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
-          <h3>Tools, DevOps & Platforms</h3>
-        </div>
-        <p>Git, GitHub, Docker, Jupyter Notebooks, Grafana</p>
-      </article>
+        <div class="panel">
+          <div class="skillsGrid">
+            <article class="skillCard">
+              <div class="skillTop">
+                <div class="skillIcon"><i class="fa-solid fa-code"></i></div>
+                <h3>Programming & Backend</h3>
+              </div>
+              <p>Python, Django, Flask, FastAPI, REST APIs, Microservices</p>
+            </article>
 
-      <article class="skillCard">
-        <div class="skillTop">
-          <div class="skillIcon"><i class="fa-solid fa-brain"></i></div>
-          <h3>Machine Learning & AI</h3>
-        </div>
-        <p>Scikit-learn, PyTorch, Autoencoders, Isolation Forest, LLMs (Gemini API)</p>
-      </article>
+            <article class="skillCard">
+              <div class="skillTop">
+                <div class="skillIcon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                <h3>Tools, DevOps & Platforms</h3>
+              </div>
+              <p>Git, GitHub, Docker, Jupyter Notebooks, Grafana</p>
+            </article>
 
-      <article class="skillCard">
-        <div class="skillTop">
-          <div class="skillIcon"><i class="fa-solid fa-laptop-code"></i></div>
-          <h3>Frontend Frameworks</h3>
-        </div>
-        <p>React.js, Next.js, Bootstrap, Tailwind CSS</p>
-      </article>
+            <article class="skillCard">
+              <div class="skillTop">
+                <div class="skillIcon"><i class="fa-solid fa-brain"></i></div>
+                <h3>Machine Learning & AI</h3>
+              </div>
+              <p>Scikit-learn, PyTorch, Autoencoders, Isolation Forest, LLMs (Gemini API)</p>
+            </article>
 
-      <article class="skillCard">
-        <div class="skillTop">
-          <div class="skillIcon"><i class="fa-solid fa-database"></i></div>
-          <h3>Data & Streaming</h3>
-        </div>
-        <p>NumPy, Pandas, MySQL, MongoDB, Apache Kafka</p>
-      </article>
+            <article class="skillCard">
+              <div class="skillTop">
+                <div class="skillIcon"><i class="fa-solid fa-laptop-code"></i></div>
+                <h3>Frontend Frameworks</h3>
+              </div>
+              <p>React.js, Next.js, Bootstrap, Tailwind CSS</p>
+            </article>
 
-      <article class="skillCard">
-        <div class="skillTop">
-          <div class="skillIcon"><i class="fa-solid fa-people-group"></i></div>
-          <h3>Soft Skills</h3>
+            <article class="skillCard">
+              <div class="skillTop">
+                <div class="skillIcon"><i class="fa-solid fa-database"></i></div>
+                <h3>Data & Streaming</h3>
+              </div>
+              <p>NumPy, Pandas, MySQL, MongoDB, Apache Kafka</p>
+            </article>
+
+            <article class="skillCard">
+              <div class="skillTop">
+                <div class="skillIcon"><i class="fa-solid fa-people-group"></i></div>
+                <h3>Soft Skills</h3>
+              </div>
+              <p>Public Speaking, Leadership, Rapport Building, Team Management</p>
+            </article>
+          </div>
         </div>
-        <p>Public Speaking, Leadership, Rapport Building, Team Management</p>
-      </article>
-    </div>
-  </div>
-</section>
+      </section>
     </main>
 
     <footer>
@@ -317,10 +297,6 @@
       <div class="copyright">
         <i>Copyright © ananya-portfolio.com | All Rights Reserved</i>
       </div>
-
-      <div class="profile-views">
-        👀 Profile Views: <span id="view-count">Loading...</span>
-      </div>
     </footer>
 
   </div>
@@ -331,12 +307,6 @@
   </div>
 
   <script>
-    // ✅ Profile views counter (CountAPI)
-    fetch("https://api.countapi.xyz/hit/ananyaj.vercel.app/visits")
-      .then(r => r.json())
-      .then(data => { document.getElementById("view-count").innerText = data.value; })
-      .catch(() => { document.getElementById("view-count").innerText = "—"; });
-
     (() => {
       "use strict";
 
@@ -397,7 +367,7 @@
         });
       };
 
-      // ✅ Theme toggle (EXACT like cert.html)
+      // Theme toggle (cert-style)
       const getPreferredTheme = () => {
         const saved = localStorage.getItem(state.themeKey);
         if (saved === "light" || saved === "dark") return saved;
@@ -430,7 +400,26 @@
         });
       };
 
-      // Mobile menu
+      // Smooth scroll for same-page links (Skills)
+      const initSamePageScroll = () => {
+        const links = $$(".jsScroll");
+        if (!links.length) return;
+
+        links.forEach(link => {
+          link.addEventListener("click", (e) => {
+            const href = link.getAttribute("href") || "";
+            if (!href.startsWith("#")) return;
+
+            const target = document.querySelector(href);
+            if (!target) return;
+
+            e.preventDefault();
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        });
+      };
+
+      // Mobile menu (improved)
       const initMobileMenu = () => {
         const toggle = $("#menuToggle");
         const menu = $("#mobileMenu");
@@ -446,7 +435,8 @@
         let open = false;
         setOpen(open);
 
-        toggle.addEventListener("click", () => {
+        toggle.addEventListener("click", (e) => {
+          e.stopPropagation();
           open = !open;
           setOpen(open);
         });
@@ -455,6 +445,22 @@
           open = false;
           setOpen(open);
         }));
+
+        document.addEventListener("click", (e) => {
+          if (!open) return;
+          const clickedInside = menu.contains(e.target) || toggle.contains(e.target);
+          if (!clickedInside) {
+            open = false;
+            setOpen(open);
+          }
+        });
+
+        window.addEventListener("resize", () => {
+          if (window.innerWidth > 900 && open) {
+            open = false;
+            setOpen(open);
+          }
+        });
       };
 
       // Reveal
@@ -474,62 +480,19 @@
         items.forEach(el => io.observe(el));
       };
 
-      // Skills
-      const SKILLS = [
-        { group: "backend", title: "Backend", desc: "FastAPI, Django, REST APIs, Auth, clean architecture." },
-        { group: "data", title: "Streaming/Data", desc: "Kafka ingestion, PostgreSQL, TimescaleDB patterns, realtime metrics." },
-        { group: "ml", title: "Machine Learning", desc: "Isolation Forest, feature pipelines, evaluation, drift awareness." },
-        { group: "genai", title: "GenAI / LLM", desc: "Prompting, tool use, structured outputs, safe responses over data." },
-        { group: "devops", title: "DevOps", desc: "Docker, deployment basics, monitoring and logs for production." },
-      ];
-
-      const renderSkills = (filter = "all") => {
-        const wrap = $("#skillCards");
-        if (!wrap) return;
-
-        const items = filter === "all" ? SKILLS : SKILLS.filter(s => s.group === filter);
-
-        wrap.innerHTML = items.map(s => `
-          <div class="mini">
-            <div class="miniTop">
-              <div class="miniIcon"><i class="fa-solid fa-layer-group"></i></div>
-              <h3>${s.title}</h3>
-            </div>
-            <p>${s.desc}</p>
-          </div>
-        `).join("");
-      };
-
-      const initSkillChips = () => {
-        const chips = $("#chips");
-        if (!chips) return;
-
-        renderSkills("all");
-
-        chips.addEventListener("click", (e) => {
-          const chip = e.target.closest(".chip");
-          if (!chip) return;
-
-          $$(".chip", chips).forEach(c => c.classList.remove("active"));
-          chip.classList.add("active");
-
-          renderSkills(chip.dataset.skill || "all");
-          showToast(`Showing: ${chip.textContent.trim()}`);
-        });
-      };
-
       document.addEventListener("DOMContentLoaded", () => {
         initTyped();
         initThemeToggle();
         initMobileMenu();
+        initSamePageScroll();
         initReveal();
         initCopyEmail();
-        initSkillChips();
       });
     })();
   </script>
 </body>
 </html>
+
 
 
 

@@ -1,5 +1,6 @@
 <!-- =========================
-     cert.html  (Leadership + Certifications + Achievements) — LIGHT/DARK + MOBILE + TOGGLE WORKING
+     cert.html  (Leadership + Certifications + Achievements)
+     — LIGHT/DARK + MOBILE MENU + TOGGLE WORKING + Skills anchor to index.html#skills
 ========================= -->
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
@@ -53,6 +54,8 @@
 
       --glass:rgba(11,18,32,.65);
       --ring:0 0 0 4px rgba(122,162,247,.12);
+
+      --navH: 64px;
 
       /* badge */
       --badge-text: rgba(255,255,255,0.85);
@@ -108,12 +111,13 @@
     nav{
       max-width:var(--max);
       margin:0 auto;
-      padding:14px 18px;
+      padding:12px 18px;
+      min-height: var(--navH);
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:12px;
-      flex-wrap:wrap; /* ✅ mobile friendly */
+      flex-wrap:wrap;
     }
     .brand{display:flex;align-items:center;gap:10px;font-weight:700;white-space:nowrap}
     .dot{
@@ -145,7 +149,6 @@
     }
     .navlinks a:hover{color:var(--text);background:rgba(255,255,255,.06)}
     html[data-theme="light"] .navlinks a:hover{background:rgba(8,15,30,.06)}
-
     .navlinks a.active{color:var(--text);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}
     html[data-theme="light"] .navlinks a.active{background:rgba(8,15,30,.06);border:1px solid rgba(8,15,30,.12)}
 
@@ -168,6 +171,43 @@
     .iconBtn:hover{transform:translateY(-1px);background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18)}
     html[data-theme="light"] .iconBtn:hover{background:rgba(255,255,255,.92);border-color:rgba(8,15,30,.16)}
     .iconBtn:active{transform:translateY(0px)}
+
+    /* ✅ Mobile menu toggle button */
+    .burger{display:none}
+
+    /* ✅ Mobile menu */
+    .mobileMenu{
+      border-top:1px solid var(--border);
+      background: rgba(255,255,255,.02);
+    }
+    html[data-theme="light"] .mobileMenu{
+      background: rgba(255,255,255,.55);
+    }
+    .mobileMenuInner{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:10px 18px 14px;
+      display:grid;
+      gap:10px;
+    }
+    .mobileLinks{
+      display:grid; gap:8px;
+      list-style:none; margin:0; padding:0;
+    }
+    .mobileLinks a{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      display:flex; align-items:center; gap:10px;
+    }
+    html[data-theme="light"] .mobileLinks a{
+      background: rgba(255,255,255,.80);
+    }
+    .mobileLinks a:hover{ background: rgba(255,255,255,.06); }
+    html[data-theme="light"] .mobileLinks a:hover{ background: rgba(255,255,255,.95); }
+    .mobileMenu[hidden]{ display:none !important; }
 
     main{flex:1;max-width:var(--max);width:100%;margin:0 auto;padding:28px 18px 0}
 
@@ -300,7 +340,6 @@
     .footNav a:hover{color:var(--text);background:rgba(255,255,255,.05)}
     html[data-theme="light"] .footNav a:hover{background:rgba(8,15,30,.06)}
 
-    /* ✅ fixed: no missing variable */
     .copyright{
       text-align:center;
       padding:15px 0;
@@ -313,6 +352,9 @@
       nav{ padding:10px 14px; }
       main{ padding:18px 14px 0; }
       .grid2{grid-template-columns:1fr}
+
+      .navlinks{ display:none; }
+      .burger{ display:grid; }
     }
   </style>
 </head>
@@ -327,11 +369,15 @@
         </a>
 
         <div class="navRight">
-          <ul class="navlinks">
+          <ul class="navlinks" aria-label="Primary navigation">
             <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
             <li><a href="experience.html"><i class="fa-solid fa-briefcase"></i> Experience</a></li>
             <li><a class="active" href="cert.html"><i class="fa-solid fa-certificate"></i> Certifications</a></li>
             <li><a href="projects.html"><i class="fa-solid fa-diagram-project"></i> Projects</a></li>
+
+            <!-- ✅ Skills anchor to index.html#skills -->
+            <li><a href="index.html#skills"><i class="fa-solid fa-bolt"></i> Skills</a></li>
+
             <li><a href="contact.html"><i class="fa-solid fa-paper-plane"></i> Contact</a></li>
           </ul>
 
@@ -339,8 +385,30 @@
           <button class="iconBtn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme" type="button">
             <i class="fa-solid fa-moon"></i>
           </button>
+
+          <!-- ✅ Mobile menu toggle -->
+          <button class="iconBtn burger" id="menuToggle" aria-label="Open menu" aria-expanded="false" title="Menu" type="button">
+            <i class="fa-solid fa-bars"></i>
+          </button>
         </div>
       </nav>
+
+      <!-- ✅ Mobile menu (collapsible) -->
+      <div class="mobileMenu" id="mobileMenu" hidden>
+        <div class="mobileMenuInner">
+          <ul class="mobileLinks" aria-label="Mobile navigation">
+            <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="experience.html"><i class="fa-solid fa-briefcase"></i> Experience</a></li>
+            <li><a class="active" href="cert.html"><i class="fa-solid fa-certificate"></i> Certifications</a></li>
+            <li><a href="projects.html"><i class="fa-solid fa-diagram-project"></i> Projects</a></li>
+
+            <!-- ✅ Skills anchor to index.html#skills -->
+            <li><a href="index.html#skills"><i class="fa-solid fa-bolt"></i> Skills</a></li>
+
+            <li><a href="contact.html"><i class="fa-solid fa-paper-plane"></i> Contact</a></li>
+          </ul>
+        </div>
+      </div>
     </header>
 
     <main>
@@ -445,40 +513,77 @@
 
   </div>
 
-  <!-- ✅ Theme toggle JS (same as your fixed experience.html) -->
+  <!-- ✅ Theme + Mobile menu JS -->
   <script>
     (function () {
       "use strict";
+
       const themeKey = "ananya-theme";
       const root = document.documentElement;
-      const btn = document.getElementById("themeToggle");
 
-      function setTheme(theme){
+      const themeBtn = document.getElementById("themeToggle");
+      const menuBtn = document.getElementById("menuToggle");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      function setTheme(theme) {
         root.dataset.theme = theme;
         localStorage.setItem(themeKey, theme);
-        if (btn){
-          btn.innerHTML = theme === "light"
+
+        if (themeBtn) {
+          themeBtn.innerHTML = theme === "light"
             ? '<i class="fa-solid fa-moon"></i>'
             : '<i class="fa-solid fa-sun"></i>';
-          btn.title = `Switch to ${theme === "light" ? "dark" : "light"} mode`;
-          btn.setAttribute("aria-label", btn.title);
+
+          themeBtn.title = `Switch to ${theme === "light" ? "dark" : "light"} mode`;
+          themeBtn.setAttribute("aria-label", themeBtn.title);
         }
       }
 
-      function getInitialTheme(){
+      function getInitialTheme() {
         const saved = localStorage.getItem(themeKey);
         if (saved === "light" || saved === "dark") return saved;
-        const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+
+        const prefersLight = window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: light)").matches;
+
         return prefersLight ? "light" : "dark";
       }
 
-      // init
+      // Init theme
       setTheme(root.dataset.theme || getInitialTheme());
 
-      if (btn){
-        btn.addEventListener("click", () => {
+      // Theme toggle
+      if (themeBtn) {
+        themeBtn.addEventListener("click", () => {
           const current = root.dataset.theme || "dark";
           setTheme(current === "light" ? "dark" : "light");
+        });
+      }
+
+      // Mobile menu toggle
+      if (menuBtn && mobileMenu) {
+        const setOpen = (open) => {
+          menuBtn.setAttribute("aria-expanded", String(open));
+          menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+          menuBtn.innerHTML = open
+            ? '<i class="fa-solid fa-xmark"></i>'
+            : '<i class="fa-solid fa-bars"></i>';
+          mobileMenu.hidden = !open;
+        };
+
+        let open = false;
+        setOpen(open);
+
+        menuBtn.addEventListener("click", () => {
+          open = !open;
+          setOpen(open);
+        });
+
+        mobileMenu.querySelectorAll("a").forEach(a => {
+          a.addEventListener("click", () => {
+            open = false;
+            setOpen(open);
+          });
         });
       }
     })();
